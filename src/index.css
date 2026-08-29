@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Nunito+Sans:wght@400;500;600;700&display=swap');
+:root{
+  --paper:#ECEEE7; --panel:#F5F6F0; --panel2:#E3E7DB; --ink:#212a21; --muted:#6c7566;
+  --line:#D3D8C8; --pine:#33503F; --pine2:#436b52; --glow:#C79A3C; --rose:#B6725F;
+}
+*{box-sizing:border-box}
+.ys-root{font-family:'Nunito Sans',system-ui,sans-serif;color:var(--ink);background:var(--paper);min-height:100%;}
+.ys-serif{font-family:'Fraunces',Georgia,serif;}
+.ys-btn{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+.ys-press{transition:transform .12s ease, background .2s ease, box-shadow .2s ease;}
+.ys-press:active{transform:scale(.97);}
+.ys-card{background:var(--panel);border:1px solid var(--line);border-radius:20px;}
+.ys-chip{font-size:11px;letter-spacing:.02em;padding:3px 9px;border-radius:999px;background:var(--panel2);color:var(--muted);white-space:nowrap;}
+.ys-img{background:#fff;border-radius:16px;object-fit:contain;display:block;}
+.ys-fade{animation:ysfade .5s ease both;}
+@keyframes ysfade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+.ys-ring{border-radius:50%;border:1.5px solid var(--pine2);}
+.ys-breathe{animation:ysbreathe 9s ease-in-out infinite;}
+.ys-breathe-slow{animation:ysbreathe 9s ease-in-out infinite;}
+@keyframes ysbreathe{0%,100%{transform:scale(.72);opacity:.5;}45%{transform:scale(1);opacity:1;}55%{transform:scale(1);opacity:1;}}
+.ys-navitem{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;font-weight:600;padding:8px 0;flex:1;color:var(--muted);}
+.ys-navitem.on{color:var(--pine);}
+.ys-scroll::-webkit-scrollbar{width:0;height:0;}
+input.ys-in{font-family:inherit;width:100%;padding:13px 15px;border-radius:14px;border:1px solid var(--line);background:var(--panel);color:var(--ink);font-size:15px;outline:none;}
+input.ys-in:focus{border-color:var(--pine2);box-shadow:0 0 0 3px rgba(67,107,82,.12);}
+.ys-dot{width:6px;height:6px;border-radius:50%;background:var(--pine2);}
+@media (prefers-reduced-motion: reduce){
+  .ys-breathe,.ys-breathe-slow{animation:none;transform:scale(.92);}
+  .ys-fade{animation:none;}
+}
