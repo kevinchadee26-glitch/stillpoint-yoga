@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <g fill="none" stroke="#33503F" stroke-opacity="0.32" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="100" cy="62" r="17"/>
+    <path d="M100 79 C 88 92, 84 108, 84 118 L 116 118 C 116 108, 112 92, 100 79 Z" fill="#33503F" fill-opacity="0.10"/>
+    <path d="M84 118 C 60 126, 56 140, 66 146 L 134 146 C 144 140, 140 126, 116 118 Z" fill="#33503F" fill-opacity="0.10"/>
+    <path d="M70 132 C 84 126, 116 126, 130 132"/>
+  </g>
+  <text x="100" y="176" text-anchor="middle" font-family="Nunito Sans, system-ui, sans-serif" font-size="13" font-weight="700" fill="#33503F" fill-opacity="0.42" letter-spacing="0.5">photo coming soon</text>
+</svg>
