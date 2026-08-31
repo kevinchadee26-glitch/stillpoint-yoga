@@ -9,6 +9,7 @@ let POSES=[];
 /* ---------- helpers ---------- */
 function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
 const LEVEL_LABEL={Easy:"Beginner",Medium:"Intermediate",Hard:"Expert"};
+const catLabel=(p)=>{const c=p&&p.categories&&p.categories[0];return c?c.replace(" Yoga",""):"Yoga";};
 function levelAllows(level,p){
   if(level==="Easy") return p.levels.includes("Beginner");
   if(level==="Medium") return p.levels.includes("Beginner")||p.levels.includes("Intermediate");
@@ -258,7 +259,7 @@ function Viewer({seq,startIndex=0,onClose,title,onLogPoses,sound,setSound}){
             <img className="ys-img" src={p.img} alt={p.name} style={{width:"100%",maxWidth:300,height:260}} onError={e=>{e.currentTarget.style.opacity=.25;}}/>
           </div>
           <div style={{display:"flex",gap:6,flexWrap:"wrap",marginTop:16}}>
-            {p.categories.slice(0,3).map(c=><Chip key={c}>{c.replace(" Yoga","")}</Chip>)}
+            {(p.categories||[]).slice(0,3).map(c=><Chip key={c}>{c.replace(" Yoga","")}</Chip>)}
             <Chip>{p.levels.includes("Beginner")?"Beginner":p.levels[0]}</Chip>
           </div>
           <h2 className="ys-serif" style={{fontSize:28,fontWeight:500,margin:"12px 0 2px"}}>{p.name}</h2>
@@ -377,7 +378,7 @@ function Today({profile,sessions,openViewer,sound,setSound}){
             <div style={{flex:1,minWidth:0}}>
               <p style={{margin:0,fontSize:11,color:"var(--muted)",fontWeight:700,letterSpacing:".04em"}}>{idx===0?"WARM UP":idx===seq.length-1?"COOL DOWN":"FLOW "+idx}</p>
               <p className="ys-serif" style={{margin:"1px 0 2px",fontSize:18,fontWeight:500}}>{p.name}</p>
-              <p style={{margin:0,fontSize:12.5,color:"var(--muted)",whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{p.categories[0].replace(" Yoga","")} · {p.sanskrit}</p>
+              <p style={{margin:0,fontSize:12.5,color:"var(--muted)",whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{catLabel(p)} · {p.sanskrit}</p>
             </div>
             <ChevronRight size={20} color="var(--muted)"/>
           </button>
@@ -447,7 +448,7 @@ function DayLog({dateKey,session,onClose,saveSession,openViewer,prefill}){
   function toggle(id){setPicked(p=>p.includes(id)?p.filter(x=>x!==id):[...p,id]);}
   function save(){ saveSession(dateKey,picked,note.trim()); onClose(); }
   const d=new Date(dateKey+"T00:00:00");
-  const filtered=POSES.filter(p=>p.name.toLowerCase().includes(q.toLowerCase())||p.sanskrit.toLowerCase().includes(q.toLowerCase())).slice(0,40);
+  const filtered=POSES.filter(p=>(p.name||"").toLowerCase().includes(q.toLowerCase())||(p.sanskrit||"").toLowerCase().includes(q.toLowerCase())).slice(0,40);
   return (
     <div className="ys-root ys-fade" style={{position:"fixed",inset:0,zIndex:60,background:"var(--paper)",display:"flex",flexDirection:"column"}}>
       <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"14px 16px",borderBottom:"1px solid var(--line)"}}>
@@ -465,7 +466,7 @@ function DayLog({dateKey,session,onClose,saveSession,openViewer,prefill}){
                 <PoseThumb pose={p} size={46}/>
                 <div style={{flex:1,minWidth:0}} onClick={()=>openViewer([p],0)}>
                   <p className="ys-serif" style={{margin:0,fontSize:16,fontWeight:500}}>{p.name}</p>
-                  <p style={{margin:0,fontSize:12,color:"var(--muted)"}}>{p.categories[0].replace(" Yoga","")}</p>
+                  <p style={{margin:0,fontSize:12,color:"var(--muted)"}}>{catLabel(p)}</p>
                 </div>
                 <button className="ys-btn ys-press" onClick={()=>toggle(p.id)} style={{color:"var(--muted)",padding:6}}><X size={18}/></button>
               </div>
@@ -490,7 +491,7 @@ function DayLog({dateKey,session,onClose,saveSession,openViewer,prefill}){
                 <PoseThumb pose={p} size={44}/>
                 <div style={{flex:1,minWidth:0}}>
                   <p className="ys-serif" style={{margin:0,fontSize:16,fontWeight:500}}>{p.name}</p>
-                  <p style={{margin:0,fontSize:12,color:"var(--muted)",whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{p.categories.slice(0,2).map(c=>c.replace(" Yoga","")).join(" · ")}</p>
+                  <p style={{margin:0,fontSize:12,color:"var(--muted)",whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{(p.categories||[]).slice(0,2).map(c=>c.replace(" Yoga","")).join(" · ")}</p>
                 </div>
                 <div style={{width:24,height:24,borderRadius:8,border:"1.5px solid "+(on?"var(--pine)":"var(--line)"),background:on?"var(--pine)":"transparent",display:"grid",placeItems:"center",flexShrink:0}}>{on&&<Check size={15} color="#fff"/>}</div>
               </button>
