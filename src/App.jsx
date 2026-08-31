@@ -448,7 +448,10 @@ function DayLog({dateKey,session,onClose,saveSession,openViewer,prefill}){
   function toggle(id){setPicked(p=>p.includes(id)?p.filter(x=>x!==id):[...p,id]);}
   function save(){ saveSession(dateKey,picked,note.trim()); onClose(); }
   const d=new Date(dateKey+"T00:00:00");
-  const filtered=POSES.filter(p=>(p.name||"").toLowerCase().includes(q.toLowerCase())||(p.sanskrit||"").toLowerCase().includes(q.toLowerCase())).slice(0,40);
+  const filtered=POSES
+    .filter(p=>(p.name||"").toLowerCase().includes(q.toLowerCase())||(p.sanskrit||"").toLowerCase().includes(q.toLowerCase()))
+    .sort((a,b)=>(a.name||"").localeCompare(b.name||""))
+    .slice(0, q.trim() ? 200 : 80);
   return (
     <div className="ys-root ys-fade" style={{position:"fixed",inset:0,zIndex:60,background:"var(--paper)",display:"flex",flexDirection:"column"}}>
       <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"14px 16px",borderBottom:"1px solid var(--line)"}}>
